@@ -1,19 +1,19 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import hireflowRoutes from './routes/hireflow.js'
 
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 3001
 
-// Middleware
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173'
 }))
 app.use(express.json())
 
-// Health check — always have this on a real API
+// Health check
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'ok', 
@@ -22,10 +22,8 @@ app.get('/health', (req, res) => {
   })
 })
 
-// Routes (we'll add these in Phase 2)
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to HireFlow API' })
-})
+// All HireFlow routes live under /api
+app.use('/api', hireflowRoutes)
 
 // 404 handler
 app.use((req, res) => {
@@ -40,4 +38,10 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 HireFlow API running on http://localhost:${PORT}`)
+  console.log(`📋 Endpoints ready:`)
+  console.log(`   POST /api/analyze-jd`)
+  console.log(`   POST /api/generate-scorecard`)
+  console.log(`   POST /api/generate-outreach`)
+  console.log(`   POST /api/generate-questions`)
+  console.log(`   POST /api/generate-brief`)
 })
