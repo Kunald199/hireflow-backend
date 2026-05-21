@@ -8,9 +8,16 @@ function getGroqClient() {
   })
 }
 
+function cleanJSON(text) {
+  return text
+    .replace(/```json\n?/g, '')
+    .replace(/```\n?/g, '')
+    .trim()
+}
+
 export async function callGroq(systemPrompt, userPrompt) {
   const groq = getGroqClient()
-  
+
   const completion = await groq.chat.completions.create({
     model: MODEL,
     messages: [
@@ -21,5 +28,21 @@ export async function callGroq(systemPrompt, userPrompt) {
     max_tokens: 2048
   })
 
-  return completion.choices[0].message.content
+  return cleanJSON(completion.choices[0].message.content)
+}
+
+export async function callGroqLarge(systemPrompt, userPrompt) {
+  const groq = getGroqClient()
+
+  const completion = await groq.chat.completions.create({
+    model: MODEL,
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userPrompt }
+    ],
+    temperature: 0.3,
+    max_tokens: 4096
+  })
+
+  return cleanJSON(completion.choices[0].message.content)
 }

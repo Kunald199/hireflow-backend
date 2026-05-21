@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3001
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173'
 }))
-app.use(express.json())
+app.use(express.json({ limit: '10mb' }))
 
 // Health check
 app.get('/health', (req, res) => {
@@ -38,10 +38,15 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 HireFlow API running on http://localhost:${PORT}`)
-  console.log(`📋 Endpoints ready:`)
+  console.log(`📋 AI Endpoints:`)
   console.log(`   POST /api/analyze-jd`)
   console.log(`   POST /api/generate-scorecard`)
   console.log(`   POST /api/generate-outreach`)
   console.log(`   POST /api/generate-questions`)
   console.log(`   POST /api/generate-brief`)
+  console.log(`💾 History Endpoints:`)
+  console.log(`   POST   /api/runs`)
+  console.log(`   GET    /api/runs`)
+  console.log(`   GET    /api/runs/:id`)
+  console.log(`   DELETE /api/runs/:id`)
 })

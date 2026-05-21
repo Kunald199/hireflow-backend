@@ -47,11 +47,12 @@ export async function generateScorecard(req, res) {
     Nice-to-have skills: ${niceToHaveSkills?.join(', ') || 'none provided'}`
 
     const result = await callGroq(systemPrompt, userPrompt)
+    console.log('Groq raw response:', result)
     const parsed = JSON.parse(result)
     res.json({ success: true, data: parsed })
 
-  } catch (error) {
-    console.error('generateScorecard error:', error)
+  }  catch (error) {
+    console.error('generateScorecard error:', error.message)
     res.status(500).json({ error: 'Failed to generate scorecard' })
   }
 }
