@@ -86,7 +86,7 @@ DELETE /api/runs/:id → Delete a run
 ### Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/hireflow-backend
+git clone https://github.com/Kunald199/hireflow-backend
 cd hireflow-backend
 npm install
 ```
