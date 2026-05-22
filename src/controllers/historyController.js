@@ -7,7 +7,7 @@ import {
 
 export async function saveRun(req, res) {
   try {
-    const { jobTitle, companyName, jobDescription, analysis, scorecard, questions, outreach, brief } = req.body
+    const { jobTitle, companyName,candidateName, jobDescription, analysis, scorecard, questions, outreach, brief } = req.body
 
     if (!jobTitle || !jobDescription) {
       return res.status(400).json({ error: 'jobTitle and jobDescription are required' })
@@ -15,6 +15,7 @@ export async function saveRun(req, res) {
 
     const data = await savePipelineRun({
       jobTitle,
+      candidateName,
       companyName,
       jobDescription,
       analysis,

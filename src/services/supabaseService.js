@@ -10,6 +10,7 @@ function getSupabaseClient() {
 export async function savePipelineRun({
   jobTitle,
   companyName,
+  candidateName,
   jobDescription,
   analysis,
   scorecard,
@@ -24,6 +25,7 @@ export async function savePipelineRun({
     .insert([{
       job_title: jobTitle,
       company_name: companyName,
+      candidate_name: candidateName,
       job_description: jobDescription,
       analysis,
       scorecard,
@@ -43,7 +45,7 @@ export async function getPipelineRuns() {
 
   const { data, error } = await supabase
     .from('pipeline_runs')
-    .select('id, created_at, job_title, company_name')
+    .select('id, created_at, job_title, company_name,candidate_name')
     .order('created_at', { ascending: false })
     .limit(50)
 

@@ -27,17 +27,18 @@ async function parseResumeWithGroq(resumeText, res) {
 
   const userPrompt = `Extract ALL candidate information from this resume thoroughly.
   Read every section — work history, skills, education, achievements.
+  Be specific and technical. Extract exact technology names, not generic descriptions.
   Return JSON with exactly this structure:
   {
     "name": "candidate full name",
     "currentTitle": "current or most recent job title",
     "yearsOfExperience": "total years of professional experience as a number",
     "currentCompany": "current or most recent company",
-    "skills": ["every technical and professional skill mentioned"],
-    "background": "3-4 sentence professional summary covering their full career arc, key achievements, and what makes them stand out — written for recruiter outreach",
+    "skills": ["every single technology, language, framework, tool mentioned ANYWHERE in the resume e.g. React, TypeScript, Python, AWS, PostgreSQL, Docker — be exhaustive"],
+    "background": "2-3 sentences MAX. Be specific not generic. Include: their title, years of experience, the exact technologies they are strongest in, and one standout achievement with a metric if available. Example: 5-year backend engineer specialising in Python and AWS, built microservices handling 10M daily requests at Stripe, strong in Postgres and Redis.",
     "education": "highest degree, field of study, and institution",
-    "previousCompanies": ["every company they have worked at in order"],
-    "achievements": ["every specific achievement, metric, or impact mentioned e.g. grew revenue by 40%, led team of 12"],
+    "previousCompanies": ["every company they have worked at in order most recent first"],
+    "achievements": ["every specific achievement with metrics e.g. reduced latency by 40%, led team of 8, grew revenue $2M"],
     "totalJobsHeld": "number of jobs in their career",
     "industries": ["industries they have worked in"]
   }
